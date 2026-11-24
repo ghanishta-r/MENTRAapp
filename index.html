@@ -55,6 +55,9 @@
               <i class="bi bi-person-badge-fill me-1"></i> Aanya (Mentor)
             </button>
           </div>
+          <button class="btn btn-sm btn-outline-info rounded-2 text-xs fw-semibold px-2 ms-1" onclick="openAuthModal('switch')">
+            <i class="bi bi-person-plus-fill me-1"></i> Register / Switch
+          </button>
         </div>
 
         <!-- Right Side: Notifications & User Profile Pill -->
@@ -109,6 +112,9 @@
         <span class="badge bg-success bg-opacity-20 text-success border border-success border-opacity-25 text-xs">
           <i class="bi bi-circle-fill me-1" style="font-size: 0.5rem;"></i> Verified Identity
         </span>
+        <button class="btn btn-sm btn-outline-secondary border border-secondary border-opacity-25 text-white text-xs mt-2 w-100 py-1 rounded-2" onclick="openEditProfileModal()">
+          <i class="bi bi-pencil-square me-1"></i> Edit Profile
+        </button>
       </div>
 
       <!-- Navigation Links (Data-tab drives renderActiveTab()) -->
@@ -447,6 +453,178 @@
       </div>
     </div>
   </div>
+
+  <!-- 6. Authentication, Registration & Switch Account Modal -->
+  <div class="modal fade" id="authModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content modal-content-mentra">
+        <div class="modal-header modal-header-mentra">
+          <h6 class="modal-title fw-bold text-white fs-6"><i class="bi bi-person-badge text-cyan me-2"></i> Identity Access & Registration Hub</h6>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-4">
+          <!-- Nav Tabs -->
+          <ul class="nav nav-pills nav-fill mb-3 bg-dark p-1 rounded-3 border border-secondary border-opacity-25" id="authTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active text-xs fw-bold" id="tab-switch-btn" data-bs-toggle="pill" data-bs-target="#tab-switch" type="button" role="tab"><i class="bi bi-people-fill me-1"></i> Switch Profile</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link text-xs fw-bold" id="tab-student-btn" data-bs-toggle="pill" data-bs-target="#tab-student" type="button" role="tab"><i class="bi bi-mortarboard-fill me-1"></i> Register Student</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link text-xs fw-bold" id="tab-mentor-btn" data-bs-toggle="pill" data-bs-target="#tab-mentor" type="button" role="tab"><i class="bi bi-award-fill me-1"></i> Register Mentor</button>
+            </li>
+          </ul>
+
+          <div class="tab-content" id="authTabsContent">
+            <!-- Tab 1: Switch Profile -->
+            <div class="tab-pane fade show active" id="tab-switch" role="tabpanel">
+              <p class="text-secondary text-xs mb-3">Quickly switch between seeded or registered student and mentor identities:</p>
+              <div id="authUsersList" style="max-height: 320px; overflow-y: auto;">
+                <!-- Populated dynamically via renderAuthUsersList() -->
+              </div>
+            </div>
+
+            <!-- Tab 2: Register Student -->
+            <div class="tab-pane fade" id="tab-student" role="tabpanel">
+              <form onsubmit="handleRegisterStudent(event)">
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label text-white text-xs fw-semibold">Student Full Name</label>
+                    <input type="text" id="regStudentName" class="form-control form-control-mentra" required placeholder="e.g. Priyanshu Roy">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label text-white text-xs fw-semibold">College / Institutional Email</label>
+                    <input type="email" id="regStudentEmail" class="form-control form-control-mentra" required placeholder="name@college.edu">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label text-white text-xs fw-semibold">Department / Branch</label>
+                    <input type="text" id="regStudentDept" class="form-control form-control-mentra" required placeholder="e.g. Computer Science & Engineering">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label text-white text-xs fw-semibold">Academic Year</label>
+                    <select id="regStudentYear" class="form-select form-select-mentra">
+                      <option value="1st Year (Freshman)">1st Year (Freshman)</option>
+                      <option value="2nd Year (Sophomore)">2nd Year (Sophomore)</option>
+                      <option value="3rd Year (Junior)" selected>3rd Year (Junior)</option>
+                      <option value="4th Year (Senior)">4th Year (Senior)</option>
+                    </select>
+                  </div>
+                  <div class="col-12">
+                    <label class="form-label text-white text-xs fw-semibold">Target Skills to Master (comma separated, weighted ×3)</label>
+                    <input type="text" id="regStudentSkills" class="form-control form-control-mentra" required placeholder="e.g. PyTorch, Distributed Systems, Redis, Algorithms">
+                  </div>
+                  <div class="col-12">
+                    <label class="form-label text-white text-xs fw-semibold">Technical Domain Interests (comma separated, weighted ×2)</label>
+                    <input type="text" id="regStudentInterests" class="form-control form-control-mentra" required placeholder="e.g. Artificial Intelligence, System Design, FAANG Placement">
+                  </div>
+                  <div class="col-12">
+                    <label class="form-label text-white text-xs fw-semibold">Learning Goals Paragraph (used for NLP Cosine Matching)</label>
+                    <textarea id="regStudentGoals" class="form-control form-control-mentra" rows="2" required placeholder="Describe what you want to achieve, your project or interview timeline..."></textarea>
+                  </div>
+                </div>
+                <div class="mt-3 text-end">
+                  <button type="submit" class="btn btn-sm btn-primary text-xs px-4 fw-bold">
+                    <i class="bi bi-person-check-fill me-1"></i> Complete Student Registration
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <!-- Tab 3: Register Mentor -->
+            <div class="tab-pane fade" id="tab-mentor" role="tabpanel">
+              <form onsubmit="handleRegisterMentor(event)">
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label text-white text-xs fw-semibold">Mentor Full Name</label>
+                    <input type="text" id="regMentorName" class="form-control form-control-mentra" required placeholder="e.g. Dr. Preeti Sinha">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label text-white text-xs fw-semibold">Email</label>
+                    <input type="email" id="regMentorEmail" class="form-control form-control-mentra" required placeholder="preeti@college.edu">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label text-white text-xs fw-semibold">Academic Branch / Department</label>
+                    <input type="text" id="regMentorDept" class="form-control form-control-mentra" required placeholder="e.g. Computer Science & Engineering">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label text-white text-xs fw-semibold">Designation / Role</label>
+                    <input type="text" id="regMentorTitle" class="form-control form-control-mentra" required placeholder="e.g. Professor / Lead Architect">
+                  </div>
+                  <div class="col-md-8">
+                    <label class="form-label text-white text-xs fw-semibold">Organization / Institution</label>
+                    <input type="text" id="regMentorOrg" class="form-control form-control-mentra" required placeholder="e.g. AI Research Lab / Google Cloud">
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label text-white text-xs fw-semibold">Years of Experience</label>
+                    <input type="number" id="regMentorExp" class="form-control form-control-mentra" min="1" value="5" required>
+                  </div>
+                  <div class="col-12">
+                    <label class="form-label text-white text-xs fw-semibold">Core Expertise Skills Taught (comma separated, weighted ×3)</label>
+                    <input type="text" id="regMentorSkills" class="form-control form-control-mentra" required placeholder="e.g. Deep Learning, PyTorch, Python, Computer Vision, MLOps">
+                  </div>
+                  <div class="col-12">
+                    <label class="form-label text-white text-xs fw-semibold">Specialization Domains (comma separated, weighted ×2)</label>
+                    <input type="text" id="regMentorDomains" class="form-control form-control-mentra" required placeholder="e.g. Artificial Intelligence, Research Papers, Cloud Systems">
+                  </div>
+                  <div class="col-12">
+                    <label class="form-label text-white text-xs fw-semibold">Mentorship Bio & Curriculum Summary</label>
+                    <textarea id="regMentorBio" class="form-control form-control-mentra" rows="2" required placeholder="Guiding students through foundational architectures, debugging, and interview prep..."></textarea>
+                  </div>
+                </div>
+                <div class="mt-3 text-end">
+                  <button type="submit" class="btn btn-sm btn-primary text-xs px-4 fw-bold">
+                    <i class="bi bi-award-fill me-1"></i> Register Faculty / Alumni Mentor
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. Edit Profile Modal -->
+  <div class="modal fade" id="editProfileModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content modal-content-mentra">
+        <div class="modal-header modal-header-mentra">
+          <h6 class="modal-title fw-bold text-white fs-6"><i class="bi bi-pencil-square text-primary me-2"></i> Edit User Profile</h6>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form onsubmit="handleUpdateProfile(event)">
+          <div class="modal-body p-4 space-y-3">
+            <div>
+              <label class="form-label text-white text-xs fw-semibold">Full Name</label>
+              <input type="text" id="editProfName" class="form-control form-control-mentra" required>
+            </div>
+            <div>
+              <label class="form-label text-white text-xs fw-semibold">Department / Department Branch</label>
+              <input type="text" id="editProfDept" class="form-control form-control-mentra" required>
+            </div>
+            <div>
+              <label id="editProfSkillsLabel" class="form-label text-white text-xs fw-semibold">Skills (comma separated)</label>
+              <input type="text" id="editProfSkills" class="form-control form-control-mentra" required>
+            </div>
+            <div>
+              <label class="form-label text-white text-xs fw-semibold">Profile Bio & Background</label>
+              <textarea id="editProfBio" class="form-control form-control-mentra" rows="3" required></textarea>
+            </div>
+          </div>
+          <div class="modal-footer modal-footer-mentra">
+            <button type="button" class="btn btn-sm btn-outline-secondary text-xs" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-sm btn-primary text-xs px-3 fw-bold">
+              <i class="bi bi-check2-circle me-1"></i> Save Profile Changes
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mermaid.js for Dynamic Interactive SVG Architecture Diagrams -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 
   <!-- Bootstrap 5.3.3 Bundle JS CDN -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

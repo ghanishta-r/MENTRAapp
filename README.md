@@ -10,8 +10,23 @@ MENTRA was engineered from the ground up to solve the cold-start and disconnect 
 
 ### Key Architectural Highlights:
 1. **Zero-Database Setup / Zero MongoDB**: Runs completely client-side with full persistent reactive state (`localStorage` synchronization under `mentra_state_v3`), making it instantly testable by college faculty on any browser without installing databases, configuring connection strings, or maintaining background services.
-2. **Flat Root Architecture (Zero Folders for Deployment)**: All source files (`index.html`, `style.css`, `app.js`, `vercel.json`, `README.md`) reside flat in the repository root. This allows direct **drag-and-drop web uploading to GitHub** without running terminal commands, Git CLI, or Node package managers.
-3. **Dual-Role State Machine**: Seamlessly switch between **Mentee Rohan Deshmukh** (3rd Year CS Undergrad) and **Mentor Aanya Sharma** (Microsoft SDE II / Faculty Alumni) to evaluate the end-to-end user journey: sending proposals, accepting/declining requests, launching Google Meet sessions, toggling milestone progress, and publishing solution blueprints.
+2. **Flat Root Architecture (Zero Folders for Deployment)**: All source files (`index.html`, `style.css`, `app.js`, `backend.py`, `vercel.json`, `README.md`) reside flat in the repository root. This allows direct **drag-and-drop web uploading to GitHub** without running terminal commands, Git CLI, or Node package managers.
+3. **Dual-Role State Machine & Live Identity Registration**: Seamlessly switch between **Mentee Rohan Deshmukh** and **Mentor Aanya Sharma**, or register new students and faculty mentors via the interactive **Identity Access & Registration Hub** (`authModal`).
+4. **Visual In-Browser Mermaid Rendering**: System Architecture (UML Component Diagram) and Entity-Relationship Diagram (11 collections) are dynamically rendered as crisp vector SVGs right inside the web application via Mermaid.js.
+5. **Dual-Mode Backend Compatibility**: Features a standalone [backend.py](file:///C:/Users/HP/.gemini/antigravity/scratch/mentra/backend.py) implementing the complete Flask REST API + Python TF-IDF engine with zero external pip dependencies (built-in HTTP server fallback).
+
+---
+
+### Root File Catalog
+
+| Flat Root File | Size | Architecture & Role |
+| :--- | :--- | :--- |
+| `index.html` | ~40 KB | Single-page UI shell: Navbar, role switcher, register/login hub, 9 views, and 7 modals. |
+| `style.css` | 5.3 KB | Modern CSD design system: Dark slate glassmorphism, responsive breakpoints, custom scrollbars. |
+| `app.js` | ~115 KB | Client application engine: 11 collections store, TF-IDF vectorizer, state machine, and Mermaid renderer. |
+| `backend.py` | 25.5 KB | Optional Python Flask backend: REST APIs + pure Python TF-IDF Vector Space Model (Zero MongoDB). |
+| `vercel.json` | 410 B | Zero-config static deployment manifest with security headers for instant Vercel hosting. |
+| `README.md` | ~32 KB | Complete engineering documentation, UML/ERD specs, mathematical pseudocode, and benchmark report. |
 
 ---
 
@@ -574,10 +589,11 @@ You can deploy MENTRA to production in less than 3 minutes without typing a sing
    ```
    C:\Users\HP\.gemini\antigravity\scratch\mentra\
    ```
-5. Select and **drag-and-drop** these 5 root files directly into your browser window:
+5. Select and **drag-and-drop** these 6 root files directly into your browser window:
    - `index.html`
    - `style.css`
    - `app.js`
+   - `backend.py`
    - `vercel.json`
    - `README.md`
 6. Scroll down, leave the commit message as *"Initial commit of MENTRA production platform"*, and click **"Commit changes"**.
@@ -601,6 +617,15 @@ You can deploy MENTRA to production in less than 3 minutes without typing a sing
 ### Method C: Instant Local Demonstration (Double-Click)
 - You can run the entire platform offline on any computer:
   Simply navigate to the project directory and **double-click `index.html`** in Windows File Explorer. It opens instantly in Chrome/Edge/Firefox with zero background servers required!
+
+---
+
+### Method D: Running Optional Python Flask Backend API
+- If college faculty explicitly wants to see the REST API server running in Python:
+  ```bash
+  python backend.py
+  ```
+  The server starts on `http://localhost:5000` with zero external pip dependencies (falls back to Python standard library `http.server` if Flask is not installed). All endpoints (`/api/mentors`, `/api/match`, `/api/requests`, `/api/sessions`) respond in real time.
 
 ---
 
