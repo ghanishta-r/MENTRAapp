@@ -1,0 +1,217 @@
+/* ==============================================================================
+   MENTRA — Modern Production College Mentorship Platform Stylesheet
+   Designed for CSD-level UI, Clean Glassmorphism, Micro-animations & Mobile Responsiveness
+   ============================================================================== */
+
+:root {
+  --mentra-bg: #0b0f19;
+  --mentra-surface: #0f172a;
+  --mentra-card-bg: rgba(30, 41, 59, 0.72);
+  --mentra-card-border: rgba(255, 255, 255, 0.08);
+  --mentra-indigo: #4f46e5;
+  --mentra-indigo-light: #6366f1;
+  --mentra-cyan: #06b6d4;
+  --mentra-emerald: #10b981;
+  --mentra-amber: #f59e0b;
+  --mentra-rose: #f43f5e;
+  --mentra-text-primary: #f8fafc;
+  --mentra-text-secondary: #94a3b8;
+  --mentra-text-muted: #64748b;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--mentra-bg);
+  color: var(--mentra-text-primary);
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+code, pre, .font-mono {
+  font-family: var(--font-mono);
+}
+
+/* Glassmorphism Cards */
+.glass-card {
+  background: var(--mentra-card-bg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--mentra-card-border);
+  border-radius: 1rem;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.35);
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.22s ease, box-shadow 0.22s ease;
+}
+
+.glass-card:hover {
+  border-color: rgba(99, 102, 241, 0.35);
+  box-shadow: 0 10px 28px -4px rgba(79, 70, 229, 0.18);
+}
+
+.hero-banner {
+  background: linear-gradient(135deg, rgba(79, 70, 229, 0.25) 0%, rgba(15, 23, 42, 0.95) 100%);
+  border: 1px solid rgba(99, 102, 241, 0.35);
+  border-radius: 1.25rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Modern Badges */
+.badge-mentra-csd {
+  background: rgba(99, 102, 241, 0.2);
+  color: #a5b4fc;
+  border: 1px solid rgba(99, 102, 241, 0.45);
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.375rem;
+  letter-spacing: 0.05em;
+}
+
+.badge-dynamic-match {
+  background: linear-gradient(135deg, rgba(79, 70, 229, 0.3), rgba(6, 182, 212, 0.3));
+  color: #c7d2fe;
+  border: 1px solid rgba(99, 102, 241, 0.55);
+  font-weight: 800;
+  font-size: 0.75rem;
+  border-radius: 2rem;
+  padding: 0.25rem 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.badge-tag {
+  background: rgba(255, 255, 255, 0.06);
+  color: #cbd5e1;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.7rem;
+  font-weight: 500;
+  padding: 0.2rem 0.55rem;
+  border-radius: 0.375rem;
+}
+
+.badge-verified-skill {
+  background: rgba(16, 185, 129, 0.15);
+  color: #6ee7b7;
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.2rem 0.55rem;
+  border-radius: 0.375rem;
+}
+
+/* Sidebar Styling */
+.mentra-sidebar {
+  width: 255px;
+  background: rgba(15, 23, 42, 0.95);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  min-height: calc(100vh - 65px);
+  position: sticky;
+  top: 65px;
+  z-index: 20;
+}
+
+.nav-link-mentra {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.65rem 0.85rem;
+  color: var(--mentra-text-secondary);
+  font-size: 0.82rem;
+  font-weight: 600;
+  border-radius: 0.75rem;
+  text-decoration: none;
+  transition: all 0.18s ease;
+  margin-bottom: 0.25rem;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.nav-link-mentra:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.nav-link-mentra.active {
+  color: #ffffff;
+  background: linear-gradient(90deg, #4f46e5 0%, #6366f1 100%);
+  border-color: rgba(99, 102, 241, 0.4);
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);
+}
+
+/* Modals */
+.modal-content-mentra {
+  background: #1e293b;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #f8fafc;
+  border-radius: 1.25rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.75);
+}
+
+.modal-header-mentra {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 1.25rem 1.5rem;
+}
+
+.modal-footer-mentra {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 1rem 1.5rem;
+}
+
+.form-control-mentra, .form-select-mentra {
+  background-color: #0b0f19;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #f8fafc;
+  font-size: 0.82rem;
+  border-radius: 0.75rem;
+  padding: 0.6rem 0.85rem;
+}
+
+.form-control-mentra:focus, .form-select-mentra:focus {
+  background-color: #0b0f19;
+  border-color: #6366f1;
+  color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0b0f19;
+}
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+/* Micro-animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.tab-view {
+  animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Responsive adjustment */
+@media (max-width: 991.98px) {
+  .mentra-sidebar {
+    display: none !important;
+  }
+}
